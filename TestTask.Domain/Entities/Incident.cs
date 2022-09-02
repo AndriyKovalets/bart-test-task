@@ -1,6 +1,6 @@
 ﻿namespace TestTask.Domain.Entities
 {
-    internal class Incident : IBaseEntity
+    public class Incident : IBaseEntity
     {
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;

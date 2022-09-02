@@ -1,6 +1,6 @@
 ﻿namespace TestTask.Domain.Entities
 {
-    internal class Contact: IBaseEntity
+    public class Contact: IBaseEntity
     {
         public int Id { get; set; }
         public string FirstName { get; set; } = null!;

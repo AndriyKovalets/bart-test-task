@@ -1,6 +1,6 @@
 ﻿namespace TestTask.Domain.Entities
 {
-    internal class Account: IBaseEntity
+    public class Account: IBaseEntity
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;
@@ -9,5 +9,7 @@
 
         public Contact Contact { get; set; } = null!;
         public int ContactId { get; set; }
+
+        public ICollection<Incident>? Incidents { get; set; }
     }
 }
