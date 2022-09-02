@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TestTask.Core.Common;
+using TestTask.Core.Inrerfaces.Services;
+using TestTask.Core.Services;
 using TestTask.Core.Validations;
 
 namespace TestTask.Core
@@ -13,6 +16,7 @@ namespace TestTask.Core
         {
             services.AddAutoMapper();
             services.AddFluentValitation();
+            services.AddCustomServices();
         }
 
         private static void AddAutoMapper(this IServiceCollection services)
@@ -28,9 +32,13 @@ namespace TestTask.Core
 
         private static void AddFluentValitation(this IServiceCollection services)
         {
-            services
-                .AddFluentValidationAutoValidation()
-                .AddFluentValidationClientsideAdapters();
+            services.AddFluentValidation(
+                c => c.RegisterValidatorsFromAssemblyContaining<AddContactValidation>());
+        }
+
+        private static void AddCustomServices(this IServiceCollection services)
+        {
+            services.AddScoped<IContactService, ContactService>();
         }
     }
 }
