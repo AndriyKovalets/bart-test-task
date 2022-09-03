@@ -8,26 +8,22 @@ using TestTask.Domain.Exceptions;
 
 namespace TestTask.Core.Services
 {
-    internal class ContactService : IContactService
+    internal class ContactService
+        : BaseService<AddContactDto, ContactInfoDto, UpdateContactDto, int, Contact>, IContactService
     {
         private readonly IRepository<Contact> _contactRepository;
         private readonly IMapper _mapper;
 
         public ContactService(IRepository<Contact> contactRepository, IMapper mapper)
+            :base(contactRepository, mapper)
         {
             _contactRepository = contactRepository;
             _mapper = mapper;
         }
 
-        public async Task<ContactInfoDto> AddContactAsync(AddContactDto addContactDto)
+        public override async Task<ContactInfoDto> AddAsync(AddContactDto addContactDto)
         {
-            var contact = await _contactRepository.Query()
-                .FirstOrDefaultAsync(x=>x.Email == addContactDto.Email);
-
-            if(contact != null)
-            {
-                throw new BadRequestHttpException("Contact with this email already exist");
-            }
+            await CheckEmailAsync(addContactDto.Email);
 
             var contactToAdd = _mapper.Map<Contact>(addContactDto);
 
@@ -37,48 +33,35 @@ namespace TestTask.Core.Services
             return _mapper.Map<ContactInfoDto>(contactToAdd);
         }
 
-        public async Task<List<ContactInfoDto>> GetAllContactsAsync()
-        {
-            var contactList = await _contactRepository.GetAllAsync();
-
-            return _mapper.Map<List<ContactInfoDto>>(contactList);
-        }
-
-        public async Task<ContactInfoDto> GetContactByIdAsync(int id)
+        public override async Task<ContactInfoDto> UpdateAsync(int id, UpdateContactDto updateDto)
         {
             var contact = await _contactRepository.GetByKeyAsync(id);
 
-            if (contact == null)
+            if (contact is null)
             {
                 throw new NotFoundHttpException("Contact with this id not found");
             }
 
-            return _mapper.Map<ContactInfoDto>(contact);
-        }
+            if(updateDto.Email is not null)
+                await CheckEmailAsync(updateDto.Email, id);
 
-        public async Task<ContactInfoDto> EditContactAsync(int id, UpdateContactDto updateContactDto)
-        {
-            var contact = await _contactRepository.GetByKeyAsync(id);
-
-            if (contact == null)
-            {
-                throw new NotFoundHttpException("Contact with this id not found");
-            }
-
-            var isEmailExist = await _contactRepository.Query()
-                .AnyAsync(x => x.Email == updateContactDto.Email && x.Id != id);
-
-            if (isEmailExist)
-            {
-                throw new BadRequestHttpException("Contact with this email already exist");
-            }
-
-            _mapper.Map(updateContactDto, contact);
+            _mapper.Map(updateDto, contact);
 
             await _contactRepository.UpdateAsync(contact);
             await _contactRepository.SaveChangesAsync();
 
             return _mapper.Map<ContactInfoDto>(contact);
+        }
+
+        private async Task CheckEmailAsync(string email, int? id = null)
+        {
+            var isEmailExist = await _contactRepository.Query()
+                .AnyAsync(x => x.Email == email &&(!id.HasValue || x.Id != id));
+
+            if (isEmailExist)
+            {
+                throw new BadRequestHttpException("Contact with this email already exist");
+            }
         }
     }
 }

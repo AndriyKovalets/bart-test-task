@@ -3,10 +3,7 @@
 namespace TestTask.Core.Inrerfaces.Services
 {
     public interface IContactService
+        : IBaseService<AddContactDto, ContactInfoDto, UpdateContactDto, int>
     {
-        Task<ContactInfoDto> AddContactAsync(AddContactDto addContactDto);
-        Task<List<ContactInfoDto>> GetAllContactsAsync();
-        Task<ContactInfoDto> GetContactByIdAsync(int Id);
-        Task<ContactInfoDto> EditContactAsync(int id, UpdateContactDto updateContactDto);
     }
 }
