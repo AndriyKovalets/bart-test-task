@@ -39,6 +39,7 @@ namespace TestTask.Core
         private static void AddCustomServices(this IServiceCollection services)
         {
             services.AddScoped<IContactService, ContactService>();
+            services.AddScoped<IAccountService, AccountService>();
         }
     }
 }
