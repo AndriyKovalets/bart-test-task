@@ -3,7 +3,7 @@ using TestTask.Domain.Dtos.ContactDtos;
 
 namespace TestTask.Core.Validations
 {
-    public class AddContactValidation: AbstractValidator<AddContactDto>
+    public class AddContactValidation : AbstractValidator<AddContactDto>
     {
         public AddContactValidation()
         {
