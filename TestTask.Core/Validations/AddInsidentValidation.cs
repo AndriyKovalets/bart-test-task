@@ -14,8 +14,7 @@ namespace TestTask.Core.Validations
                 .MaximumLength(1000);
 
             RuleFor(x => x.AccountId)
-                .NotNull()
-                .NotEmpty();
+                .NotNull();
         }
     }
 }

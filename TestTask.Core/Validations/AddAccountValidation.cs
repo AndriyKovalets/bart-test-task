@@ -14,8 +14,7 @@ namespace TestTask.Core.Validations
                 .NotEmpty();
 
             RuleFor(x => x.ContactId)
-               .NotNull()
-               .NotEmpty();
+               .NotNull();
         }
     }
 }
