@@ -40,6 +40,7 @@ namespace TestTask.Core
         {
             services.AddScoped<IContactService, ContactService>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IIncidentService, IncidentService>();
         }
     }
 }

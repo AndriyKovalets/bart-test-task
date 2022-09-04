@@ -66,10 +66,10 @@ namespace TestTask.Core.Services
 
         private async Task CheckContactAsync(int contactId)
         {
-            var isContact = await _contactRepository.Query()
+            var isContactExist = await _contactRepository.Query()
                 .AnyAsync(x => x.Id == contactId);
 
-            if (!isContact)
+            if (!isContactExist)
             {
                 throw new NotFoundHttpException("Contact with this id not found");
             }

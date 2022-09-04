@@ -16,9 +16,9 @@ namespace TestTask.WebApi.Controllers
         }
 
         [HttpPost]
-        public virtual async Task<IActionResult> AddAsync([FromBody] TAddDto addtDto)
+        public virtual async Task<IActionResult> AddAsync([FromBody] TAddDto addDto)
         {
-            var entity = await _service.AddAsync(addtDto);
+            var entity = await _service.AddAsync(addDto);
 
             return Ok(entity);
         }
@@ -31,20 +31,20 @@ namespace TestTask.WebApi.Controllers
             return Ok(entityList);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ContactInfoDto>> GetAsync([FromRoute] TKey id)
+        [HttpGet("{key}")]
+        public async Task<ActionResult<ContactInfoDto>> GetAsync([FromRoute] TKey key)
         {
-            var entity = await _service.GetByKeyAsync(id);
+            var entity = await _service.GetByKeyAsync(key);
 
             return Ok(entity);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{key}")]
         public async Task<ActionResult<ContactInfoDto>> UpdateAsync(
-            [FromRoute] TKey id,
+            [FromRoute] TKey key,
             [FromBody] TUndateDto updateContactDto)
         {
-            var entity = await _service.UpdateAsync(id, updateContactDto);
+            var entity = await _service.UpdateAsync(key, updateContactDto);
 
             return Ok(entity);
         }
