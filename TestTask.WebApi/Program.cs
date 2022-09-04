@@ -10,7 +10,8 @@ namespace TestTask.WebApi
         public static async Task Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+                .WriteTo.Console()
                 .WriteTo.File("Logs/Log-.txt", rollingInterval: RollingInterval.Day)
                 .CreateLogger();
 
