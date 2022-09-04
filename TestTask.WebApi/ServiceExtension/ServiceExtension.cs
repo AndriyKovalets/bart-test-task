@@ -2,7 +2,7 @@
 {
     internal static class ServiceExtension
     {
-        public static void SetupWebApi(this IServiceCollection services, IConfiguration configuration)
+        public static void SetupWebApi(this IServiceCollection services)
         {
             services.AddGeteralServices();
             services.AddCorsPolicy();

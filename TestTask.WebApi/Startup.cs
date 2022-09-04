@@ -13,7 +13,7 @@ namespace TestTask.WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.SetupWebApi(Configuration);
+            services.SetupWebApi();
             services.SetupCore(Configuration);
             services.SetupInfrastructure(Configuration);
         }
@@ -33,7 +33,6 @@ namespace TestTask.WebApi
 
             app.UseCors("Policy");
 
-            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

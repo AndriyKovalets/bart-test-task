@@ -44,7 +44,8 @@ namespace TestTask.WebApi.Middlewares
             await CreateExceptionAsync(context, ex.StatusCode, new { error = ex.Message });
         }
 
-        private async Task CreateExceptionAsync(HttpContext context,
+        private async Task CreateExceptionAsync(
+            HttpContext context,
             HttpStatusCode statusCode = HttpStatusCode.InternalServerError,
             object? errorBody = null)
         {

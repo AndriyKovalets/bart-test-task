@@ -3,7 +3,8 @@ using TestTask.Domain.Entities;
 
 namespace TestTask.Core.Inrerfaces.Repisitories
 {
-    public interface IRepository<TEntity> where TEntity : class, IBaseEntity
+    public interface IRepository<TEntity>
+        where TEntity : class, IBaseEntity
     {
         Task<IEnumerable<TEntity>> GetAllAsync();
         Task<TEntity?> GetByKeyAsync<TKey>(TKey key);

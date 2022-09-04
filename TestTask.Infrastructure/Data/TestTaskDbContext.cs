@@ -4,11 +4,11 @@ using TestTask.Infrastructure.Data.Configurations;
 
 namespace TestTask.Infrastructure.Data
 {
-    internal class TestTaskDbContext : DbContext
+    public class TestTaskDbContext : DbContext
     {
         public TestTaskDbContext(DbContextOptions<TestTaskDbContext> options) : base(options)
         {
-            Database.EnsureCreated();
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -20,8 +20,8 @@ namespace TestTask.Infrastructure.Data
             modelBuilder.ApplyConfiguration(new IncidentConfiguration());
         }
 
-        public DbSet<Contact> Contacts { get; set; }
-        public DbSet<Account> Accounts { get; set; }
-        public DbSet<Incident> Incidents { get; set; }
+        public DbSet<Contact>? Contacts { get; set; }
+        public DbSet<Account>? Accounts { get; set; }
+        public DbSet<Incident>? Incidents { get; set; }
     }
 }
