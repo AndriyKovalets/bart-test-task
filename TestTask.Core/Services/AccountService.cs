@@ -64,6 +64,34 @@ namespace TestTask.Core.Services
             return _mapper.Map<AccountInfoDto>(account);
         }
 
+        public async Task<AccountFullInfoDto> GetFullInfoByKeyAsync(int id)
+        {
+            var account = await _accountRepository.Query()
+                .Include(x => x.Contact)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if(account is null)
+            {
+                throw new NotFoundHttpException("Account with this id not found");
+            }
+
+            return _mapper.Map<AccountFullInfoDto>(account);
+        }
+
+        public async Task<AccountInfoWithIncidentsDto> GetInsidentListAsync(int accountId)
+        {
+            var account = await _accountRepository.Query()
+                .Include(x => x.Incidents)
+                .FirstOrDefaultAsync(x => x.Id == accountId);
+
+            if (account is null)
+            {
+                throw new NotFoundHttpException("Account with this id not found");
+            }
+
+            return _mapper.Map<AccountInfoWithIncidentsDto>(account);
+        }
+
         private async Task CheckContactAsync(int contactId)
         {
             var isContactExist = await _contactRepository.Query()

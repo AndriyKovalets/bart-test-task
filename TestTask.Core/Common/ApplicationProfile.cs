@@ -27,6 +27,7 @@ namespace TestTask.Core.Common
             CreateMap<Account, AccountFullInfoDto>();
             CreateMap<UpdateAccountDto, Account>()
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+            CreateMap<Account, AccountInfoWithIncidentsDto>();
 
             CreateMap<AddIncidentDto, Incident>();
             CreateMap<Incident, IncidentInfoDto>();
