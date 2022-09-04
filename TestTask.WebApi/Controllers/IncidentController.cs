@@ -24,5 +24,13 @@ namespace TestTask.WebApi.Controllers
 
             return Ok(entity);
         }
+
+        [HttpGet("{key}/full-info")]
+        public async Task<IActionResult> GetIncidentFullInfoAsync([FromBody] string key)
+        {
+            var entity = await _incidentService.GetIncidentFullInfoAsync(key);
+
+            return Ok(entity);
+        }
     }
 }

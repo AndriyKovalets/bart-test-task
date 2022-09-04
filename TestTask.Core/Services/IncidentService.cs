@@ -91,6 +91,21 @@ namespace TestTask.Core.Services
             return _mapper.Map<IncidentInfoDto>(incident);
         }
 
+        public async Task<IncidentFullInfoDto> GetIncidentFullInfoAsync(string name)
+        {
+            var insident = await _incidentRepository.Query()
+                .Include(x => x.Account)
+                    .ThenInclude(x => x.Contact)
+                .FirstOrDefaultAsync(x=>x.Name == name);
+
+            if(insident is null)
+            {
+                throw new NotFoundHttpException("Insident with this name not found");
+            }
+
+            return _mapper.Map<IncidentFullInfoDto>(insident);
+        }
+
         private async Task CheckAccountIdAsync(int accountId)
         {
             var isAccountExist = await _accountRepository.Query()
