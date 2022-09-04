@@ -55,9 +55,8 @@ namespace TestTask.Core.Services
             await CheckConntactEmailAsync(addDto.ContactEmail);
 
             var updateContact = _mapper.Map<Contact>(addDto);
-            _mapper.Map(account.Contact, updateContact);
 
-            await _accountRepository.UpdateAsync(account);
+            await UpdateContactAsync(account, updateContact);
 
             var incidentToAdd = new Incident()
             {
@@ -126,6 +125,18 @@ namespace TestTask.Core.Services
             {
                 throw new NotFoundHttpException("Contact email not found");
             }
+        }
+
+        private async Task UpdateContactAsync(Account account, Contact contact)
+        {
+            var contactFromDb = await _contactRepository.Query()
+                .FirstAsync(x => x.Email == contact.Email);
+
+            _mapper.Map(contact, contactFromDb);
+            await _contactRepository.UpdateAsync(contactFromDb);
+
+            account.Contact = contactFromDb;
+            await _accountRepository.UpdateAsync(account);
         }
     }
 }

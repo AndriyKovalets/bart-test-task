@@ -26,7 +26,7 @@ namespace TestTask.WebApi.Controllers
         }
 
         [HttpGet("{key}/full-info")]
-        public async Task<IActionResult> GetIncidentFullInfoAsync([FromBody] string key)
+        public async Task<IActionResult> GetIncidentFullInfoAsync([FromRoute] string key)
         {
             var entity = await _incidentService.GetIncidentFullInfoAsync(key);
 
